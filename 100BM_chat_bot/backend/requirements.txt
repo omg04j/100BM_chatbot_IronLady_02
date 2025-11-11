@@ -1,0 +1,65 @@
+# ============================================================================
+# FASTAPI BACKEND - For React + FastAPI Conversion + Feedback System
+# ============================================================================
+
+# Web Framework
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Environment Variables
+python-dotenv
+
+# ============================================================================
+# FEEDBACK SYSTEM - NEW
+# ============================================================================
+
+# Database (for feedback storage)
+sqlalchemy
+psycopg2-binary # PostgreSQL driver for production
+alembic  # Database migrations (optional)
+
+# Server-Sent Events (for streaming chat)
+sse-starlette
+
+# ============================================================================
+# RAG SYSTEM - Existing Dependencies
+# ============================================================================
+
+# LangChain
+langchain==0.3.3
+langchain-openai
+langchain-community==0.3.1
+langchain-core
+langchain-chroma
+langchain-text-splitters
+
+# OpenAI
+openai
+
+# Vector Store & Embeddings
+chromadb
+
+# Tokenization
+tiktoken
+
+# Document Processing
+python-docx
+pypdf
+openpyxl
+python-pptx
+unstructured
+
+# Data Processing
+pandas
+numpy
+
+# Pydantic (used by FastAPI and LangChain)
+pydantic
+pydantic-core
+
+# Async Support
+aiohttp
+streamlit
+plotly
+pandas

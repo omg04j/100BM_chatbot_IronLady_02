@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+# Environment variables
+.env
+
+# Node
+node_modules/
+npm-debug.log*
+
+# React build
+frontend/build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Vector store (if large - see note below)
+# backend/vector_store/
