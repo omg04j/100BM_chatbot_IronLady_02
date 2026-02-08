@@ -9,6 +9,7 @@ Features:
 - Uses existing content, no hallucinations
 - ✅ NEW: Remembers conversation history for follow-up questions
 - ✅ FIXED: Session-specific memory (not shared between users)
+- ✅ UPDATED: Uses Groq API with llama-3.3-70b-versatile model
 """
 import os
 import re
@@ -26,8 +27,11 @@ from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.documents import Document
 
-# LangChain OpenAI
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+# LangChain Groq
+from langchain_groq import ChatGroq
+
+# LangChain OpenAI (only for embeddings)
+from langchain_openai import OpenAIEmbeddings
 
 from langchain_chroma import Chroma
 
@@ -354,13 +358,13 @@ class LLMFactory:
     """Factory for creating LLM instances"""
     
     @staticmethod
-    def get_chat_llm(model: str = "gpt-4o-mini", temperature: float = 0.2, streaming: bool = True) -> ChatOpenAI:
-        """Get ChatOpenAI instance - slightly higher temp for personalization"""
-        return ChatOpenAI(
+    def get_chat_llm(model: str = "llama-3.3-70b-versatile", temperature: float = 0.2, streaming: bool = True) -> ChatGroq:
+        """Get ChatGroq instance - using Groq's fastest model"""
+        return ChatGroq(
             model=model,
-            temperature=0.2,
-            streaming=True,
-            openai_api_key=os.getenv("OPENAI_API_KEY")
+            temperature=temperature,
+            streaming=streaming,
+            groq_api_key=os.getenv("GROQ_API_KEY")
         )
 
 
@@ -400,16 +404,17 @@ class ProfileAwareRAGSystem:
     RAG System with Profile-Based Personalization + Session-Based Conversation Memory
     Customized 100BM Delivery Model
     ✅ FIXED: Memory is now passed from session state (not stored in this class)
+    ✅ UPDATED: Now using Groq API with llama-3.3-70b-versatile
     """
     
     def __init__(self, vector_store_path: str = "./vector_store"):
-        print("🚀 Initializing Profile-Aware RAG System...")
+        print("🚀 Initializing Profile-Aware RAG System with Groq...")
         
         # Load vector store
         self.vector_store = VectorStoreLoader(persist_directory=vector_store_path)
         self.vector_store.load()
         
-        # Initialize LLM with slight creativity for personalization
+        # Initialize LLM with Groq (llama-3.3-70b-versatile)
         self.llm = LLMFactory.get_chat_llm(temperature=0.2)
         
         # Initialize components
@@ -430,7 +435,8 @@ class ProfileAwareRAGSystem:
             'queries': []
         }
         
-        print("✓ Profile-Aware RAG System Ready!")
+        print("✓ Profile-Aware RAG System Ready with Groq!")
+        print("✓ Model: llama-3.3-70b-versatile (Groq)")
         print("✓ Supports: doctor, HR, entrepreneur, executive, and more!")
         print("✓ Conversation memory enabled (session-based)!")
     
@@ -759,6 +765,7 @@ def main():
     """Test profile-aware system"""
     print("="*80)
     print("🚀 PROFILE-AWARE RAG SYSTEM with SESSION MEMORY - Customized 100BM Delivery")
+    print("🚀 Powered by Groq (llama-3.3-70b-versatile)")
     print("="*80)
     
     # Initialize
@@ -798,6 +805,7 @@ def main():
     
     print("\n" + "="*80)
     print("✅ Profile-Aware System with Session Memory Ready!")
+    print("✅ Powered by Groq API (llama-3.3-70b-versatile)")
     print("="*80)
 
 
